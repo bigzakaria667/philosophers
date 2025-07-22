@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:50:46 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/07/22 16:35:51 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/07/22 21:59:42 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@ typedef struct s_simulation
 	int	time_to_eat;
 	int	time_to_sleep;
 	int	nb_meals;
+	// TABLEAU DE PHILO
+	t_philo	philo[philos];
 }	t_simulation;
 
 typedef struct s_philo
 {
 	int		id;
-	int		last_meal_time;
 	int		meals;
 	t_simulation	simulation;
 }	t_philo;

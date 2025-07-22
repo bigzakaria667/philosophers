@@ -6,13 +6,13 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:59:14 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/07/22 20:14:10 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/07/22 22:04:38 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	init_simulation(char **argv)
+t_simulation	init_simlation(char **argv)
 {
 	t_simulation	simulation;
 
@@ -24,25 +24,30 @@ void	init_simulation(char **argv)
 		simulation.nb_meals = 0;
 	else
 		simulation.nb_meals = -1;
+	return (simulation);
 }
 
-void	init_philo(char **argv, int *id)
+t_philo		init_philo(char **argv, int id)
 {
 	t_philo	philo;
 
-	id = 0;
-	while (id != argv[1])
-	{
-
-		id++:
-	}
+	philo.id = id;
+	philo.meals = 0;
+	return (philo);
 }
 
-void	initialisation(char **argv)
+t_simulation	initialisation(char **argv)
 {
-	int	id;
+	t_simulation	simulation;
+	int		i;
 
-	id = 0;
-	init_simulation(argv);
-	init_philo(argv, &id);
+	i = 0;
+	simulation = init_simulation(argv);
+	while (i <= simulation->philos)
+	{
+		simulation->philo[i] = init_philo(argv, id);
+		id++;
+		i++;
+	}
+	return (simulation);
 }
