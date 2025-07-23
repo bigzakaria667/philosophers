@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:50:37 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/07/22 22:05:37 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/07/23 21:30:35 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	philosophers(char **argv)
 {
-	t_simulation	simulation;
+	t_simulation	*simulation;
 
 	parsing(argv);
 	simulation = initialisation(argv);
