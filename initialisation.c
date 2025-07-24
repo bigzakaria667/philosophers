@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:59:14 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/07/24 15:28:56 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/07/24 16:41:39 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void		give_fork_right_left(t_simulation **simulation)
 	fork = (*simulation)->fork;
 	while (i <= (*simulation)->philos)
 	{
-		(*simulation)->philo[i].right_fork = fork[j++];
-		(*simulation)->philo[i].left_fork = fork[j];
+		(*simulation)->philo[i]->right_fork = fork[j++];
+		(*simulation)->philo[i]->left_fork = fork[j];
 	}
 }
 
@@ -49,27 +49,25 @@ t_philo		*init_philo(int id)
 {
 	t_philo		*philo;
 
+	philo = NULL;
 	//pthread_create(&simulation.philo, NULL, ..., NULL);
 	philo->id = id;
 	philo->meals_count = 0;
 	return (philo);
 }
 
-t_simulation	*init_simulation(char **argv)
+void	init_simulation(t_simulation **simulation, char **argv)
 {
-	t_simulation	*simulation;
-
-	simulation.philos = argv[1];
-	simulation.time_to_die = argv[2];
-	simulation.time_to_eat = argv[3];
-	simulation.time_to_sleep = argv[4];
-	if (argc == 5)
-		simulation.nb_meals = 0;
+	(*simulation)->philos = ft_atoi(argv[1]);
+	(*simulation)->time_to_die = ft_atoi(argv[2]);
+	(*simulation)->time_to_eat = ft_atoi(argv[3]);
+	(*simulation)->time_to_sleep = ft_atoi(argv[4]);
+	if (argv[5])
+		(*simulation)->nb_meals = 0;
 	else
-		simulation.nb_meals = -1;
-	simulation.philo = malloc (sizeof(t_philo) * argv[1]);
-	simulation.fork = malloc (sizeof(pthread_mutex_t) * argv[1]);
-	return (simulation);
+		(*simulation)->nb_meals = -1;
+	(*simulation)->philo = malloc (sizeof(t_philo) * ft_atoi(argv[1]));
+	(*simulation)->fork = malloc (sizeof(pthread_mutex_t) * ft_atoi(argv[1]));
 }
 
 t_simulation	*initialisation(char **argv)
@@ -80,11 +78,11 @@ t_simulation	*initialisation(char **argv)
 
 	id = 1;
 	i = 0;
-	simulation = init_simulation(argv);
+	init_simulation(&simulation, argv);
 	init_fork(&simulation);
 	while (i <= simulation->philos)
 	{
-		simulation.philo[i] = init_philo(id);
+		simulation->philo[i] = init_philo(id);
 		id++;
 		i++;
 	}

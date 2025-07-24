@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 16:45:58 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/07/24 15:02:01 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/07/24 17:03:12 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,9 @@ int	ft_atoi(const char *str)
 int	check_numbers(char **argv)
 {
 	int	i;
-	int	philos;
 
 	i = 2;
-	philos = ft_atoi(argv[1]);
-	if (philos <= 0 || philos > 200)
+	if (ft_atoi(argv[i]) <= 0 || ft_atoi(argv[i]) > 200)
 		return (1);
 	while (ft_atoi(argv[i]) && i != 5)
 	{

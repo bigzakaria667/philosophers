@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:50:46 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/07/24 15:22:59 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/07/24 16:41:20 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_simulation
 	int		time_to_eat;
 	int		time_to_sleep;
 	int		nb_meals;
-	struct s_philo	*philo;
+	struct s_philo	**philo;
 	pthread_mutex_t	*fork;
 }	t_simulation;
 
@@ -51,7 +51,7 @@ int	parsing(char **argv);
 void		give_fork_right_left(t_simulation **simulation);
 void		init_fork(t_simulation **simulation);
 t_philo		*init_philo(int id);
-t_simulation	*init_simulation(char **argv);
+void		init_simulation(t_simulation **simulation, char **argv);
 t_simulation	*initialisation(char **argv);
 
 #endif

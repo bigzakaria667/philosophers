@@ -6,7 +6,7 @@
 #    By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/24 13:57:27 by zel-ghab          #+#    #+#              #
-#    Updated: 2025/07/24 14:00:47 by zel-ghab         ###   ########.fr        #
+#    Updated: 2025/07/24 16:54:13 by zel-ghab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@
 
 NAME 		= philo
 CC		= cc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g
 
 ###########################################
 ## SOURCES
