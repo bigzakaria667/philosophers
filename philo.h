@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:50:46 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/07/24 16:41:20 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/07/28 15:15:38 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ typedef struct s_simulation
 
 typedef struct s_philo
 {
-	pthread_t		philo;
+	//pthread_t		philo;
 	int			id;
 	int			meals_count;
-	struct s_simulation	simulation;
+	struct s_simulation	*simulation;
 	pthread_mutex_t		right_fork;
 	pthread_mutex_t		left_fork;
 }	t_philo;
@@ -43,15 +43,15 @@ void	philosophers(char **argv);
 int	main(int argc, char **argv);
 
 /*----------------  parsing.c  ---------------*/
-int	ft_atoi(const char *str);
+int	ft_atoi(char *str);
 int	check_numbers(char **argv);
 int	parsing(char **argv);
 
 /*----------------  initialisation.c  ---------------*/
 void		give_fork_right_left(t_simulation **simulation);
 void		init_fork(t_simulation **simulation);
-t_philo		*init_philo(int id);
+t_philo		*init_philo(int id, t_simulation **simulation);
 void		init_simulation(t_simulation **simulation, char **argv);
-t_simulation	*initialisation(char **argv);
+void	initialisation(t_simulation **simulation, char **argv);
 
 #endif

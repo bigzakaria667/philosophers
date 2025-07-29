@@ -6,13 +6,13 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 16:45:58 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/07/24 17:03:12 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/07/28 15:12:46 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_atoi(const char *str)
+int	ft_atoi(char *str)
 {
 	int					i;
 	int					signe;
@@ -45,7 +45,7 @@ int	check_numbers(char **argv)
 	i = 2;
 	if (ft_atoi(argv[i]) <= 0 || ft_atoi(argv[i]) > 200)
 		return (1);
-	while (ft_atoi(argv[i]) && i != 5)
+	while (argv[i] && ft_atoi(argv[i]) && i != 5)
 	{
 		if (ft_atoi(argv[i]) < 60 || ft_atoi(argv[i]) > 2147483647)
 			return (1);
