@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:59:14 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/07/29 19:59:02 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/07/30 21:01:16 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ t_philo	*init_philo(int id, t_simulation **simulation)
 	philo = malloc(sizeof(t_philo));
 	if (!philo)
 		return (NULL);
-	if (pthread_create(&philo->thread, NULL, thread_routine, &philo) != 0)
-		return (NULL);
 	philo->simulation = *simulation;
 	philo->id = id;
-	philo->meals_count = 0;
+	philo->meals = 0;
+	if (pthread_create(&philo->thread, NULL, thread_routine, philo) != 0)
+		return (NULL);
 	return (philo);
 }
 

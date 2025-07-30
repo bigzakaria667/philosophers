@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:50:46 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/07/29 19:17:07 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/07/30 20:32:12 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	int			id;
-	int			meals_count;
+	int			meals;
 	struct s_simulation	*simulation;
 	pthread_mutex_t		right_fork;
 	pthread_mutex_t		left_fork;
