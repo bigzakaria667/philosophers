@@ -6,16 +6,31 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:59:14 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/07/28 15:52:36 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/07/29 19:59:02 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void		give_fork_right_left(t_simulation **simulation)
+t_philo	*init_philo(int id, t_simulation **simulation)
 {
-	int		i;
-	int		j;
+	t_philo		*philo;
+
+	philo = malloc(sizeof(t_philo));
+	if (!philo)
+		return (NULL);
+	if (pthread_create(&philo->thread, NULL, thread_routine, &philo) != 0)
+		return (NULL);
+	philo->simulation = *simulation;
+	philo->id = id;
+	philo->meals_count = 0;
+	return (philo);
+}
+
+void	give_fork(t_simulation	**simulation)
+{
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -28,7 +43,7 @@ void		give_fork_right_left(t_simulation **simulation)
 	}
 }
 
-void		init_fork(t_simulation **simulation)
+void	init_fork(t_simulation **simulation)
 {
 	int		i;
 
@@ -41,26 +56,19 @@ void		init_fork(t_simulation **simulation)
 	}
 }
 
-t_philo		*init_philo(int id, t_simulation **simulation)
-{
-	t_philo		*philo;
-
-	philo = malloc(sizeof(t_philo));
-	if (!philo)
-		return (NULL);
-	//pthread_create(&simulation.philo, NULL, ..., NULL);
-	philo->simulation = *simulation;
-	philo->id = id;
-	philo->meals_count = 0;
-	return (philo);
-}
-
 void	init_simulation(t_simulation **simulation, char **argv)
 {
+	int	time_of_think;
+
 	(*simulation)->philos = ft_atoi(argv[1]);
 	(*simulation)->time_to_die = ft_atoi(argv[2]);
 	(*simulation)->time_to_eat = ft_atoi(argv[3]);
 	(*simulation)->time_to_sleep = ft_atoi(argv[4]);
+	time_of_think = ft_atoi(argv[2]) - ft_atoi(argv[3]) - ft_atoi(argv[4]);
+	if (time_of_think > 0)
+		(*simulation)->time_to_think = time_of_think / 2;
+	if (time_of_think <= 0)
+		(*simulation)->time_to_think = 0;
 	if (argv[5])
 		(*simulation)->nb_meals = ft_atoi(argv[5]);
 	else
@@ -88,5 +96,5 @@ void	initialisation(t_simulation **simulation, char **argv)
 		id++;
 		i++;
 	}
-	give_fork_right_left(simulation);
+	give_fork(simulation);
 }
