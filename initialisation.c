@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:59:14 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/08/05 14:41:04 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/08/05 17:40:21 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_philo	*init_philo(int id, t_simulation **simulation)
 	philo->simulation = *simulation;
 	philo->id = id;
 	philo->meals = 0;
+	philo->last_meal = 0;
 	return (philo);
 }
 
@@ -41,7 +42,7 @@ void	give_fork(t_simulation	**simulation)
 	}
 }
 
-void	init_fork(t_simulation **simulation)
+void	init_mutex(t_simulation **simulation)
 {
 	int		i;
 
@@ -56,6 +57,9 @@ void	init_fork(t_simulation **simulation)
 	(*simulation)->print = malloc(sizeof(pthread_mutex_t));
 	if (pthread_mutex_init((*simulation)->print, NULL) != 0)
 		return ;
+	(*simulation)->dead_mutex = malloc(sizeof(pthread_mutex_t));
+	if (pthread_mutex_init((*simulation)->print, NULL) != 0)
+		return ;
 }
 
 void	init_simulation(t_simulation **simulation, char **argv)
@@ -66,6 +70,7 @@ void	init_simulation(t_simulation **simulation, char **argv)
 	(*simulation)->time_to_die = ft_atoi(argv[2]);
 	(*simulation)->time_to_eat = ft_atoi(argv[3]);
 	(*simulation)->time_to_sleep = ft_atoi(argv[4]);
+	(*simulation)->dead = 0;
 	time_of_think = ft_atoi(argv[2]) - ft_atoi(argv[3]) - ft_atoi(argv[4]);
 	if (time_of_think > 0)
 		(*simulation)->time_to_think = time_of_think / 2;
@@ -88,7 +93,7 @@ void	initialisation(t_simulation **simulation, char **argv)
 	id = 1;
 	i = 0;
 	init_simulation(simulation, argv);
-	init_fork(simulation);
+	init_mutex(simulation);
 	(*simulation)->philo = malloc(sizeof(t_philo *) * ft_atoi(argv[1]));
 	if (!(*simulation)->philo)
 		return ;
