@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:50:46 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/07/30 20:32:12 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/07/31 18:56:44 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_simulation
 	int		nb_meals;
 	struct s_philo	**philo;
 	pthread_mutex_t	*fork;
+	pthread_mutex_t	*print;
 }	t_simulation;
 
 typedef struct s_philo
@@ -37,8 +38,8 @@ typedef struct s_philo
 	int			id;
 	int			meals;
 	struct s_simulation	*simulation;
-	pthread_mutex_t		right_fork;
-	pthread_mutex_t		left_fork;
+	pthread_mutex_t		*right_fork;
+	pthread_mutex_t		*left_fork;
 }	t_philo;
 
 /*----------------  philo.c  ---------------*/

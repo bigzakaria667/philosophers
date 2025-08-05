@@ -6,7 +6,7 @@
 #    By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/24 13:57:27 by zel-ghab          #+#    #+#              #
-#    Updated: 2025/07/29 19:08:45 by zel-ghab         ###   ########.fr        #
+#    Updated: 2025/07/31 15:16:06 by zel-ghab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,7 @@ CFLAGS		= -Wall -Wextra -Werror -g
 SRC_FILES	= philo.c \
 		parsing.c \
 		initialisation.c \
-		routine.c \
-		states.c
+		routine.c
 
 ###########################################
 ## OBJECTS

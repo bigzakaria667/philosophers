@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:59:14 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/07/30 21:01:16 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/08/05 14:41:04 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,21 @@ t_philo	*init_philo(int id, t_simulation **simulation)
 	philo->simulation = *simulation;
 	philo->id = id;
 	philo->meals = 0;
-	if (pthread_create(&philo->thread, NULL, thread_routine, philo) != 0)
-		return (NULL);
 	return (philo);
 }
 
 void	give_fork(t_simulation	**simulation)
 {
 	int	i;
-	int	j;
+	int	philos;
 
 	i = 0;
-	j = 0;
-	while (i < (*simulation)->philos)
+	philos = (*simulation)->philos;
+	while (i < philos)
 	{
-		(*simulation)->philo[i]->right_fork = (*simulation)->fork[j];
-		j++;
-		(*simulation)->philo[i]->left_fork = (*simulation)->fork[j];
+		(*simulation)->philo[i]->left_fork = &(*simulation)->fork[i];
+		(*simulation)->philo[i]->right_fork = &(*simulation)->fork[(i + 1) % philos];
+		printf("Philo %d: left_fork = %p, right_fork = %p\n", i+1, &(*simulation)->fork[i], &(*simulation)->fork[(i + 1) % philos]);
 		i++;
 	}
 }
@@ -49,11 +47,15 @@ void	init_fork(t_simulation **simulation)
 
 	i = 0;
 	while (i < (*simulation)->philos)
-	{
+	{	
+		printf("Initialisation fork[%d] à l'adresse %p\n", i, &(*simulation)->fork[i]);
 		if (pthread_mutex_init(&(*simulation)->fork[i], NULL) != 0)
-			return ;
+			printf("ERREUR: Impossible d'initialiser fork[%d]\n", i);
 		i++;
 	}
+	(*simulation)->print = malloc(sizeof(pthread_mutex_t));
+	if (pthread_mutex_init((*simulation)->print, NULL) != 0)
+		return ;
 }
 
 void	init_simulation(t_simulation **simulation, char **argv)
@@ -87,7 +89,7 @@ void	initialisation(t_simulation **simulation, char **argv)
 	i = 0;
 	init_simulation(simulation, argv);
 	init_fork(simulation);
-	(*simulation)->philo = malloc(sizeof(t_philo) * ft_atoi(argv[1]));
+	(*simulation)->philo = malloc(sizeof(t_philo *) * ft_atoi(argv[1]));
 	if (!(*simulation)->philo)
 		return ;
 	while (i < (*simulation)->philos)
@@ -97,4 +99,11 @@ void	initialisation(t_simulation **simulation, char **argv)
 		i++;
 	}
 	give_fork(simulation);
+	i = 0;
+	while (i < (*simulation)->philos)
+	{
+		if (pthread_create(&((*simulation)->philo[i]->thread), NULL, thread_routine, (*simulation)->philo[i]) != 0)
+			return ;
+		i++;
+	}
 }
