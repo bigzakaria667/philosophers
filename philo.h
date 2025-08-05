@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:50:46 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/07/31 18:56:44 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/08/05 15:15:00 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	initialisation(t_simulation **simulation, char **argv);
 
 /*----------------  routine.c  ---------------*/
 void	*thread_routine(void *arg);
+void	is_sleeping(t_philo *philo);
+void	is_eating(t_philo *philo);
 
 /*----------------  states.c  ---------------*/
 void	think(t_philo *philo);
