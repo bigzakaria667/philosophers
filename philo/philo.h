@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:50:46 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/08/13 15:36:53 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/08/13 20:05:42 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	is_sleeping(t_philo *philo);
 void	is_eating(t_philo *philo);
 void	is_thinking(t_philo *philo);
 long	get_time_ms(void);
+int	check_death(t_simulation *simulation);
 
 /*----------------  doctor.c  ---------------*/
 void	*thread_doctor(void *arg);

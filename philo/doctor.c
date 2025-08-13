@@ -26,6 +26,7 @@ void	*thread_doctor(void *arg)
 		if (simulation->global_meals == simulation->philos)
 			break;
 		pthread_mutex_unlock(simulation->count_meal);
+		pthread_mutex_lock(simulation->last_meal);
 		if (get_time_ms() - simulation->philo[i]->last_meal > time_to_die)
 		{
 			pthread_mutex_unlock(simulation->last_meal);

@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:50:37 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/08/13 15:22:53 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/08/13 20:03:52 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ int	philosophers(char **argv)
 	t_simulation	*simulation;
 	int		i;
 
-	i = 0;
 	if (parsing(argv) == 1)
 		return (1); 
 	simulation = malloc(sizeof(t_simulation));
 	if (!simulation)
 		return (1);
 	initialisation(&simulation, argv);
-	while (simulation->philo[i])
+	i = 0;
+	while (i < simulation->philos)
 	{
 		if (pthread_join(simulation->philo[i]->thread, NULL) != 0)
 			return (1);
