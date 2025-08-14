@@ -6,7 +6,7 @@
 #    By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/24 13:57:27 by zel-ghab          #+#    #+#              #
-#    Updated: 2025/08/05 17:18:30 by zel-ghab         ###   ########.fr        #
+#    Updated: 2025/08/14 19:48:40 by zel-ghab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@
 
 NAME 		= philo
 CC		= cc
-CFLAGS		= -Wall -Wextra -Werror -g
+CFLAGS		= -Wall -Wextra -Werror -g3 #-fsanitize=thread
 
 ###########################################
 ## SOURCES
@@ -36,7 +36,8 @@ SRC_FILES	= philo.c \
 		parsing.c \
 		initialisation.c \
 		routine.c \
-		doctor.c
+		doctor.c \
+		utils.c
 
 ###########################################
 ## OBJECTS

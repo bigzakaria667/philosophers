@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 16:45:58 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/07/28 15:12:46 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/08/14 17:02:19 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,14 @@ int	ft_atoi(char *str)
 	return (result * signe);
 }
 
-int	check_numbers(char **argv)
+int	check_limits(char **argv)
 {
 	int	i;
 
-	i = 2;
+	i = 1;
 	if (ft_atoi(argv[i]) <= 0 || ft_atoi(argv[i]) > 200)
 		return (1);
+	i++;
 	while (argv[i] && ft_atoi(argv[i]) && i != 5)
 	{
 		if (ft_atoi(argv[i]) < 60 || ft_atoi(argv[i]) > 2147483647)
@@ -59,9 +60,32 @@ int	check_numbers(char **argv)
 	return (0);
 }
 
+int	check_numbers(char **argv)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	j = 0;
+	while (argv[i])
+	{
+		while (argv[i][j])
+		{
+			if (argv[i][j] < '0' || argv[i][j] > '9')
+				return (1);
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	return (0);
+}
+
 int	parsing(char **argv)
 {
 	if (check_numbers(argv) == 1)
+		return (1);
+	if (check_limits(argv) == 1)
 		return (1);
 	return (0);
 }

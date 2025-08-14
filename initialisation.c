@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:59:14 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/08/05 17:40:21 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/08/14 19:42:25 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,85 +22,79 @@ t_philo	*init_philo(int id, t_simulation **simulation)
 	philo->simulation = *simulation;
 	philo->id = id;
 	philo->meals = 0;
-	philo->last_meal = 0;
+	philo->last_meal = (*simulation)->start_time;
 	return (philo);
 }
 
 void	give_fork(t_simulation	**simulation)
 {
 	int	i;
-	int	philos;
 
 	i = 0;
-	philos = (*simulation)->philos;
-	while (i < philos)
+	while (i < (*simulation)->philos)
 	{
-		(*simulation)->philo[i]->left_fork = &(*simulation)->fork[i];
-		(*simulation)->philo[i]->right_fork = &(*simulation)->fork[(i + 1) % philos];
-		printf("Philo %d: left_fork = %p, right_fork = %p\n", i+1, &(*simulation)->fork[i], &(*simulation)->fork[(i + 1) % philos]);
+		(*simulation)->philo[i]->left_fork = (*simulation)->fork[i];
+		(*simulation)->philo[i]->right_fork = (*simulation)->fork[(i + 1) % (*simulation)->philos];
 		i++;
 	}
 }
 
-void	init_mutex(t_simulation **simulation)
+int	init_mutex(t_simulation **simulation)
 {
 	int		i;
 
 	i = 0;
 	while (i < (*simulation)->philos)
 	{	
-		printf("Initialisation fork[%d] à l'adresse %p\n", i, &(*simulation)->fork[i]);
 		if (pthread_mutex_init(&(*simulation)->fork[i], NULL) != 0)
-			printf("ERREUR: Impossible d'initialiser fork[%d]\n", i);
+			return (1);
 		i++;
 	}
-	(*simulation)->print = malloc(sizeof(pthread_mutex_t));
-	if (pthread_mutex_init((*simulation)->print, NULL) != 0)
-		return ;
-	(*simulation)->dead_mutex = malloc(sizeof(pthread_mutex_t));
-	if (pthread_mutex_init((*simulation)->print, NULL) != 0)
-		return ;
+	if (pthread_mutex_init(&(*simulation)->print, NULL) != 0)
+		return (1);
+	if (pthread_mutex_init(&(*simulation)->dead_mutex, NULL) != 0)
+		return (1);
+	if (pthread_mutex_init(&(*simulation)->last_meal, NULL) != 0)
+		return (1);
+	if (pthread_mutex_init(&(*simulation)->count_meal, NULL) != 0)
+		return (1);
+	return (0);
 }
 
-void	init_simulation(t_simulation **simulation, char **argv)
+int	init_simulation(t_simulation **simulation, char **argv)
 {
-	int	time_of_think;
-
 	(*simulation)->philos = ft_atoi(argv[1]);
 	(*simulation)->time_to_die = ft_atoi(argv[2]);
 	(*simulation)->time_to_eat = ft_atoi(argv[3]);
 	(*simulation)->time_to_sleep = ft_atoi(argv[4]);
+	(*simulation)->time_to_think = 0;
+	(*simulation)->global_meals = 0;
 	(*simulation)->dead = 0;
-	time_of_think = ft_atoi(argv[2]) - ft_atoi(argv[3]) - ft_atoi(argv[4]);
-	if (time_of_think > 0)
-		(*simulation)->time_to_think = time_of_think / 2;
-	if (time_of_think <= 0)
-		(*simulation)->time_to_think = 0;
+	(*simulation)->start_time = get_time_ms();
+	(*simulation)->philo = malloc(sizeof(t_philo *) * ft_atoi(argv[1]));
+	if (!(*simulation)->philo)
+		return (1);
 	if (argv[5])
 		(*simulation)->nb_meals = ft_atoi(argv[5]);
 	else
 		(*simulation)->nb_meals = -1;
 	(*simulation)->fork = malloc(sizeof(pthread_mutex_t) * ft_atoi(argv[1]));
 	if (!(*simulation)->fork)
-		return ;
+		return (1);
+	init_mutex(simulation);
+	return (0);
 }
 
-void	initialisation(t_simulation **simulation, char **argv)
+int	initialisation(t_simulation **simulation, char **argv)
 {
 	int		i;
-	int		id;
 
-	id = 1;
+	if (init_simulation(simulation, argv) == 1)
+		return (1);
 	i = 0;
-	init_simulation(simulation, argv);
-	init_mutex(simulation);
-	(*simulation)->philo = malloc(sizeof(t_philo *) * ft_atoi(argv[1]));
-	if (!(*simulation)->philo)
-		return ;
 	while (i < (*simulation)->philos)
 	{
-		(*simulation)->philo[i] = init_philo(id, simulation);
-		id++;
+		(*simulation)->philo[i] = init_philo(i + 1, simulation);
 		i++;
 	}
 	give_fork(simulation);
@@ -108,7 +102,10 @@ void	initialisation(t_simulation **simulation, char **argv)
 	while (i < (*simulation)->philos)
 	{
 		if (pthread_create(&((*simulation)->philo[i]->thread), NULL, thread_routine, (*simulation)->philo[i]) != 0)
-			return ;
+			return (1);
 		i++;
 	}
+	if (pthread_create(&((*simulation)->doctor), NULL, thread_doctor, *simulation) != 0)
+		return (1);
+	return (0);
 }
