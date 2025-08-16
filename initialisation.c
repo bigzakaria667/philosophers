@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:59:14 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/08/14 19:42:25 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/08/16 19:18:25 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	give_fork(t_simulation	**simulation)
 	i = 0;
 	while (i < (*simulation)->philos)
 	{
-		(*simulation)->philo[i]->left_fork = (*simulation)->fork[i];
-		(*simulation)->philo[i]->right_fork = (*simulation)->fork[(i + 1) % (*simulation)->philos];
+		(*simulation)->philo[i]->left_fork = &(*simulation)->fork[i];
+		(*simulation)->philo[i]->right_fork = &(*simulation)->fork[(i + 1) % (*simulation)->philos];
 		i++;
 	}
 }
@@ -47,7 +47,14 @@ int	init_mutex(t_simulation **simulation)
 	while (i < (*simulation)->philos)
 	{	
 		if (pthread_mutex_init(&(*simulation)->fork[i], NULL) != 0)
+		{
+			while (i >= 0)
+			{	
+				pthread_mutex_destroy(&(*simulation)->fork[i]);
+				i--;
+			}
 			return (1);
+		}
 		i++;
 	}
 	if (pthread_mutex_init(&(*simulation)->print, NULL) != 0)
@@ -80,8 +87,9 @@ int	init_simulation(t_simulation **simulation, char **argv)
 		(*simulation)->nb_meals = -1;
 	(*simulation)->fork = malloc(sizeof(pthread_mutex_t) * ft_atoi(argv[1]));
 	if (!(*simulation)->fork)
-		return (1);
-	init_mutex(simulation);
+		return (free_all(simulation), 1);
+	if (init_mutex(simulation) == 1)
+		return (free_all(simulation), 1);
 	return (0);
 }
 
@@ -95,17 +103,17 @@ int	initialisation(t_simulation **simulation, char **argv)
 	while (i < (*simulation)->philos)
 	{
 		(*simulation)->philo[i] = init_philo(i + 1, simulation);
+		if (!(*simulation)->philo[i])
+		{
+			while (i >= 0)
+			{
+				free((*simulation)->philo[i]);
+				i--;
+			}
+			return (1);
+		}
 		i++;
 	}
 	give_fork(simulation);
-	i = 0;
-	while (i < (*simulation)->philos)
-	{
-		if (pthread_create(&((*simulation)->philo[i]->thread), NULL, thread_routine, (*simulation)->philo[i]) != 0)
-			return (1);
-		i++;
-	}
-	if (pthread_create(&((*simulation)->doctor), NULL, thread_doctor, *simulation) != 0)
-		return (1);
 	return (0);
 }

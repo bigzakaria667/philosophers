@@ -36,13 +36,13 @@ void	*thread_doctor(void *arg)
 			pthread_mutex_lock(&simulation->print);
 			printf("%ld %d died\n", get_time_ms() - simulation->start_time, i + 1);
 			pthread_mutex_unlock(&simulation->print);
-			exit(1);
+			return (pthread_mutex_unlock(&simulation->count_meal), NULL);
 		}
 		pthread_mutex_unlock(&simulation->last_meal);
 		i++;
 		if (i >= simulation->philos)
 			i = 0;
+		pthread_mutex_unlock(&simulation->count_meal);
 	}
-	pthread_mutex_unlock(&simulation->count_meal);
 	return (NULL);
 }
