@@ -6,7 +6,7 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:59:14 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/08/16 19:18:25 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/08/16 20:23:50 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	give_fork(t_simulation	**simulation)
 	while (i < (*simulation)->philos)
 	{
 		(*simulation)->philo[i]->left_fork = &(*simulation)->fork[i];
-		(*simulation)->philo[i]->right_fork = &(*simulation)->fork[(i + 1) % (*simulation)->philos];
+		(*simulation)->philo[i]->right_fork = &(*simulation)->fork[(i + 1)
+			% (*simulation)->philos];
 		i++;
 	}
 }
@@ -45,11 +46,11 @@ int	init_mutex(t_simulation **simulation)
 
 	i = 0;
 	while (i < (*simulation)->philos)
-	{	
+	{
 		if (pthread_mutex_init(&(*simulation)->fork[i], NULL) != 0)
 		{
 			while (i >= 0)
-			{	
+			{
 				pthread_mutex_destroy(&(*simulation)->fork[i]);
 				i--;
 			}
