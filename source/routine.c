@@ -6,11 +6,24 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 14:17:09 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/08/16 20:27:34 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/08/18 15:36:22 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
+
+int	one_philo(t_philo *philo, pthread_mutex_t *left_fork)
+{
+	if (philo->simulation->philos == 1)
+	{
+		pthread_mutex_lock(left_fork);
+		if (print_mutex("has taken a fork", philo) == 1)
+			return (pthread_mutex_unlock(left_fork), 1);
+		pthread_mutex_unlock(left_fork);
+		return (1);
+	}
+	return (0);
+}
 
 int	is_thinking(t_philo *philo)
 {
@@ -31,6 +44,8 @@ int	is_sleeping(t_philo *philo)
 int	is_eating(t_philo *philo, pthread_mutex_t *left_fork,
 		pthread_mutex_t *right_fork)
 {
+	if (one_philo(philo, left_fork) == 1)
+		return (1);
 	pthread_mutex_lock(left_fork);
 	if (print_mutex("has taken a fork", philo) == 1)
 		return (pthread_mutex_unlock(left_fork), 1);

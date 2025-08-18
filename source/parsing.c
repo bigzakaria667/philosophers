@@ -6,11 +6,11 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 16:45:58 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/08/14 17:02:19 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/08/18 15:36:14 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
 
 int	ft_atoi(char *str)
 {

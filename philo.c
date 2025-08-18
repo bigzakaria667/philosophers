@@ -6,33 +6,11 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:50:37 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/08/16 20:25:48 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/08/18 14:55:20 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	free_all(t_simulation **simulation)
-{
-	int	i;
-
-	i = 0;
-	while (i < (*simulation)->philos)
-	{
-		free((*simulation)->philo[i]);
-		(*simulation)->philo[i] = NULL;
-		pthread_mutex_destroy(&(*simulation)->fork[i]);
-		i++;
-	}
-	free((*simulation)->philo);
-	(*simulation)->philo = NULL;
-	free((*simulation)->fork);
-	(*simulation)->fork = NULL;
-	pthread_mutex_destroy(&(*simulation)->print);
-	pthread_mutex_destroy(&(*simulation)->dead_mutex);
-	pthread_mutex_destroy(&(*simulation)->last_meal);
-	pthread_mutex_destroy(&(*simulation)->count_meal);
-}
 
 int	thread_join(t_simulation **simulation)
 {

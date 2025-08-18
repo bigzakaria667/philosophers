@@ -5,20 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/07/24 13:57:27 by zel-ghab          #+#    #+#              #
-#    Updated: 2025/08/14 19:48:40 by zel-ghab         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/06/09 18:01:25 by zel-ghab          #+#    #+#              #
-#    Updated: 2025/06/23 16:46:45 by zel-ghab         ###   ########.fr        #
+#    Created: 2025/08/18 15:33:41 by zel-ghab          #+#    #+#              #
+#    Updated: 2025/08/18 15:35:40 by zel-ghab         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,17 +15,17 @@
 
 NAME 		= philo
 CC		= cc
-CFLAGS		= -Wall -Wextra -Werror -g3 #-fsanitize=thread
+CFLAGS		= -Wall -Wextra -Werror #-g3 -fsanitize=thread
 
 ###########################################
 ## SOURCES
 
 SRC_FILES	= philo.c \
-		parsing.c \
-		initialisation.c \
-		routine.c \
-		doctor.c \
-		utils.c
+		source/parsing.c \
+		source/initialisation.c \
+		source/routine.c \
+		source/doctor.c \
+		source/utils.c
 
 ###########################################
 ## OBJECTS

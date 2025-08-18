@@ -6,11 +6,11 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 17:18:04 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/08/16 20:51:31 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/08/18 15:35:56 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
 
 int	check_dead(t_simulation *simulation, int i, int time_to_die)
 {

@@ -6,11 +6,11 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 19:59:14 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/08/16 20:23:50 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/08/18 15:36:04 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
 
 t_philo	*init_philo(int id, t_simulation **simulation)
 {

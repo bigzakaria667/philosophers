@@ -6,11 +6,33 @@
 /*   By: zel-ghab <zel-ghab@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 17:27:30 by zel-ghab          #+#    #+#             */
-/*   Updated: 2025/08/16 20:38:10 by zel-ghab         ###   ########.fr       */
+/*   Updated: 2025/08/18 15:36:31 by zel-ghab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../philo.h"
+
+void	free_all(t_simulation **simulation)
+{
+	int	i;
+
+	i = 0;
+	while (i < (*simulation)->philos)
+	{
+		free((*simulation)->philo[i]);
+		(*simulation)->philo[i] = NULL;
+		pthread_mutex_destroy(&(*simulation)->fork[i]);
+		i++;
+	}
+	free((*simulation)->philo);
+	(*simulation)->philo = NULL;
+	free((*simulation)->fork);
+	(*simulation)->fork = NULL;
+	pthread_mutex_destroy(&(*simulation)->print);
+	pthread_mutex_destroy(&(*simulation)->dead_mutex);
+	pthread_mutex_destroy(&(*simulation)->last_meal);
+	pthread_mutex_destroy(&(*simulation)->count_meal);
+}
 
 int	print_mutex(char *s, t_philo *philo)
 {
